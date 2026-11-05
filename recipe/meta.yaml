@@ -1,5 +1,5 @@
 {% set name = "opentelemetry-instrumentation-system-metrics" %}
-{% set version = "0.64b0" %}
+{% set version = "0.66b1" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/opentelemetry_instrumentation_system_metrics-{{ version }}.tar.gz
-  sha256: ec8280693cdf6ea9020384c3fe884eea64a43ae78f1e2f6edc20951c871aac7e
+  sha256: b0fccbc1aecf35c182431a035ec4809b8f9607eec692243cf70f23b3bda51231
 
 build:
   number: 0
@@ -23,12 +23,14 @@ requirements:
     - python
     - opentelemetry-instrumentation =={{ version }}
     - opentelemetry-api >=1.11,<2.0.0
+    - opentelemetry-semantic-conventions =={{ version }}
     - psutil >=5.9.0,<8
 
-# No opentelemetry.test module thus no upstream tests
+# Tests disabled: they import opentelemetry.test.test_base, shipped by
+# opentelemetry-test-utils, which is not in the main channel.
 test:
   imports:
-    - opentelemetry.metrics
+    - opentelemetry.instrumentation.system_metrics
   commands:
     - pip check
   requires:
@@ -43,7 +45,7 @@ about:
   description: |
     This package provides entrypoints to configure OpenTelemetry.
   doc_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-system-metrics
-  dev_url: https://pypi.org/project/opentelemetry-instrumentation-system-metrics
+  dev_url: https://github.com/open-telemetry/opentelemetry-python-contrib/tree/main/instrumentation/opentelemetry-instrumentation-system-metrics
 
 extra:
   recipe-maintainers:
